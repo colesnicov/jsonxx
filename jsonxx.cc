@@ -14,6 +14,7 @@
 #include <vector>
 #include <limits>
 #include <mutex>
+#include <locale>
 
 // Snippet that creates an assertion function that works both in DEBUG & RELEASE mode.
 // JSONXX_ASSERT(...) macro will redirect to this. assert() macro is kept untouched.
@@ -600,6 +601,7 @@ namespace json {
 
     std::string tag( unsigned format, unsigned depth, const std::string &name, const jsonxx::Value &t) {
         std::stringstream ss;
+        ss.imbue(std::locale::classic());
         const std::string tab(depth, '\t');
 
         if( !name.empty() )
@@ -1092,6 +1094,7 @@ void Object::reset() {
   value_map_.clear();
 }
 bool Object::parse(std::istream &input) {
+  input.imbue(std::locale::classic());
   return parse(input,*this);
 }
 bool Object::parse(const std::string &input) {
@@ -1143,6 +1146,7 @@ void Array::reset() {
   values_.clear();
 }
 bool Array::parse(std::istream &input) {
+  input.imbue(std::locale::classic());
   return parse(input,*this);
 }
 bool Array::parse(const std::string &input) {
@@ -1181,6 +1185,7 @@ bool Value::empty() const {
   return false;
 }
 bool Value::parse(std::istream &input) {
+  input.imbue(std::locale::classic());
   return parse(input,*this);
 }
 bool Value::parse(const std::string &input) {
